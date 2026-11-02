@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sepsiguard}
+      POSTGRES_USER: ${POSTGRES_USER:-sepsiguard}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - sepsiguard-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sepsiguard} -d ${POSTGRES_DB:-sepsiguard}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      args:
+        INSTALL_ML: ${INSTALL_ML:-false}
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-sepsiguard}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-sepsiguard}
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env}
+      BOOTSTRAP_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL:-}
+      BOOTSTRAP_ADMIN_PASSWORD: ${BOOTSTRAP_ADMIN_PASSWORD:-}
+      BOOTSTRAP_ADMIN_NAME: ${BOOTSTRAP_ADMIN_NAME:-SepsiGuard Administrator}
+      MODEL_PATH: models/sepsis_gru.keras
+      SCALER_PATH: models/scaler.pkl
+      FEATURE_SCHEMA_PATH: models/feature_schema.json
+      METRICS_PATH: models/metrics.json
+      LOW_THRESHOLD: ${LOW_THRESHOLD:-0.30}
+      HIGH_THRESHOLD: ${HIGH_THRESHOLD:-0.70}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+volumes:
+  sepsiguard-postgres:

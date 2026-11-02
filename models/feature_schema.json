@@ -1,0 +1,96 @@
+{
+  "number_of_features": 12,
+  "time_steps": 12,
+  "features": [
+    {
+      "name": "heart_rate",
+      "label": "Heart Rate",
+      "unit": "bpm",
+      "description": "Heart rate"
+    },
+    {
+      "name": "respiratory_rate",
+      "label": "Respiratory Rate",
+      "unit": "breaths/min",
+      "description": "Respiratory rate"
+    },
+    {
+      "name": "temperature",
+      "label": "Temperature",
+      "unit": "\u00b0C",
+      "description": "Body temperature"
+    },
+    {
+      "name": "systolic_bp",
+      "label": "Systolic Blood Pressure",
+      "unit": "mmHg",
+      "description": "Systolic blood pressure"
+    },
+    {
+      "name": "diastolic_bp",
+      "label": "Diastolic Blood Pressure",
+      "unit": "mmHg",
+      "description": "Diastolic blood pressure"
+    },
+    {
+      "name": "oxygen_saturation",
+      "label": "Oxygen Saturation",
+      "unit": "%",
+      "description": "Oxygen saturation"
+    },
+    {
+      "name": "wbc",
+      "label": "WBC",
+      "unit": "\u00d710\u00b3/\u00b5L",
+      "description": "White blood cell count"
+    },
+    {
+      "name": "lactate",
+      "label": "Lactate",
+      "unit": "mmol/L",
+      "description": "Lactate concentration"
+    },
+    {
+      "name": "creatinine",
+      "label": "Creatinine",
+      "unit": "mg/dL",
+      "description": "Creatinine concentration"
+    },
+    {
+      "name": "platelets",
+      "label": "Platelets",
+      "unit": "\u00d710\u00b3/\u00b5L",
+      "description": "Platelet count"
+    },
+    {
+      "name": "bilirubin",
+      "label": "Bilirubin",
+      "unit": "mg/dL",
+      "description": "Bilirubin concentration"
+    },
+    {
+      "name": "age",
+      "label": "Age",
+      "unit": "years",
+      "description": "Patient age"
+    }
+  ],
+  "target": "sepsis_label",
+  "dataset_columns": [
+    "patient_id",
+    "time_step",
+    "heart_rate",
+    "respiratory_rate",
+    "temperature",
+    "systolic_bp",
+    "diastolic_bp",
+    "oxygen_saturation",
+    "wbc",
+    "lactate",
+    "creatinine",
+    "platelets",
+    "bilirubin",
+    "age",
+    "sepsis_label"
+  ]
+}
