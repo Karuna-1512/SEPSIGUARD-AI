@@ -20,3 +20,5 @@ data/processed/*
 data/sample/synthetic_*.csv
 data/sample/README.txt
 *.log
+node_modules/
+tmp/
